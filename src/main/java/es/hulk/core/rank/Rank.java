@@ -9,11 +9,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.ChatColor;
+import org.json.JSONObject;
 
 import java.beans.ConstructorProperties;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -25,7 +28,7 @@ public class Rank {
 
     private String name, prefix, suffix;
     private int priority;
-    private ChatColor color;
+    private String color;
     private boolean defaultRank;
     private List<String> permissions, inheritances;
 
@@ -49,7 +52,7 @@ public class Rank {
             String prefix,
             String suffix,
             int priority,
-            ChatColor color,
+            String color,
             boolean defaultRank,
             List<String> permissions,
             List<String> inheritances
@@ -65,15 +68,49 @@ public class Rank {
         this.inheritances = inheritances;
     }
 
+    public String toJSON() {
+        JSONObject object = new JSONObject();
+
+        object.put("name", name);
+        object.put("prefix", prefix);
+        object.put("suffix", suffix);
+        object.put("priority", priority);
+        object.put("color", color);
+        object.put("defaultRank", defaultRank);
+        object.put("permissions", permissions);
+        object.put("inheritances", inheritances);
+
+        return object.toString();
+    }
+
+    public static Rank fromJSON(String json) {
+        JSONObject object = new JSONObject(json);
+
+        List<String> permissions = object.getJSONArray("permissions").toList().stream().map(String::valueOf).collect(Collectors.toList());
+        List<String> inheritances = object.getJSONArray("inheritances").toList().stream().map(String::valueOf).collect(Collectors.toList());
+
+        return new Rank(
+                object.getString("name"),
+                object.getString("prefix"),
+                object.getString("suffix"),
+                object.getInt("priority"),
+                object.getString("color"),
+                object.getBoolean("defaultRank"),
+                permissions,
+                inheritances
+        );
+    }
+
     public static void init() {
         MongoCollection<Document> collection = Core.getInstance().getMongoManager().getRanks();
+
 
         collection.find().forEach((Consumer<? super Document>) doc -> {
             String name = doc.getString("name");
             String prefix = doc.getString("prefix");
             String suffix = doc.getString("suffix");
             int priority = doc.getInteger("priority");
-            ChatColor color = ChatColor.getByChar(doc.getString("color"));
+            String color = doc.getString("color");
             boolean defaultRank = doc.getBoolean("defaultRank");
             List<String> permissions = doc.getList("permissions", String.class);
             List<String> inheritances = doc.getList("inheritances", String.class);

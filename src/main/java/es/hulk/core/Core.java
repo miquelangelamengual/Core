@@ -1,18 +1,24 @@
 package es.hulk.core;
 
+import es.hulk.core.listeners.ChatListener;
 import es.hulk.core.mongo.MongoManager;
+import es.hulk.core.profile.Profile;
+import es.hulk.core.profile.ProfileListener;
 import es.hulk.core.rank.Rank;
-import es.hulk.core.rank.commands.RankCommand;
-import es.hulk.core.rank.commands.RankCreateCommand;
-import es.hulk.core.rank.commands.RankListCommand;
+import es.hulk.core.rank.RankManager;
+import es.hulk.core.rank.commands.*;
 import es.hulk.core.utils.aquamenu.MenuManager;
+import es.hulk.core.utils.aquamenu.listener.AquaMenuListener;
 import es.hulk.core.utils.command.CommandManager;
 import es.hulk.core.utils.config.FileConfig;
+import es.hulk.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 @Getter @Setter
 public final class Core extends JavaPlugin {
@@ -24,6 +30,7 @@ public final class Core extends JavaPlugin {
     private FileConfig settingsConfig;
     private MongoManager mongoManager;
     private CommandManager commandManager;
+    private RankManager rankManager;
 
     @Override
     public void onEnable() {
@@ -32,6 +39,7 @@ public final class Core extends JavaPlugin {
         this.settingsConfig = new FileConfig(this, "settings.yml");
         this.loadManagers();
         this.loadCommands();
+        this.loadListeners();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             isPlaceholderAPI = true;
@@ -42,18 +50,38 @@ public final class Core extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        super.onDisable();
+        for (Profile profile : Profile.getProfiles().values()) {
+            profile.save();
+        }
+
+        for (Rank rank : Rank.getRanks().keySet()) {
+            rank.save();
+        }
     }
 
     public void loadManagers() {
         this.mongoManager = new MongoManager(this);
         this.menuManager = new MenuManager(this);
         this.commandManager = new CommandManager(this);
+        this.rankManager = new RankManager();
     }
 
     public void loadCommands() {
         new RankCommand();
         new RankCreateCommand();
         new RankListCommand();
+        new RankSetCommand();
+        new RankSetColorCommand();
+        new RankSetPrefixCommand();
+    }
+
+    public void loadListeners() {
+        new ProfileListener();
+        new ChatListener();
+
+        Arrays.asList(
+                new AquaMenuListener(),
+                new MenuListener()
+        ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
     }
 }

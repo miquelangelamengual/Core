@@ -13,7 +13,7 @@ public class RankListCommand extends BaseCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         for (Rank rank : Rank.getRanks().keySet()) {
-            player.sendMessage(rank.getName());
+            player.sendMessage(rank.getName() + " - " + rank.getColor() + " " + rank.getPrefix());
         }
     }
 }

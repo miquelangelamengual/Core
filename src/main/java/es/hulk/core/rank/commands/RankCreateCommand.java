@@ -16,7 +16,6 @@ public class RankCreateCommand extends BaseCommand {
         String[] args = command.getArgs();
 
         Rank rank = new Rank(args[0]);
-        rank.setColor(ChatColor.WHITE);
         player.sendMessage("Rank " + rank.getName() + " created");
         rank.save();
     }

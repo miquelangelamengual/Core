@@ -17,6 +17,9 @@ public class RankCommand extends BaseCommand {
         player.sendMessage("Rank Commands");
         player.sendMessage("/rank list - List all ranks");
         player.sendMessage("/rank create <rank name> - Create a rank");
+        player.sendMessage("/rank set <rank name> - Create a rank");
+        player.sendMessage("/rank setprefix <rank name> <prefix> - Set a rank prefix");
+        player.sendMessage("/rank setcolor <rank name> <color> - Set a rank color");
         player.sendMessage(CC.CHAT_BAR);
     }
 }
