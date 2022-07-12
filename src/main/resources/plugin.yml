@@ -1,0 +1,4 @@
+name: Core
+version: 0.0.0-EXPERIMENTAL
+authors: [ ElTitoHulk, ErHarpy ]
+main: es.hulk.core.Core
