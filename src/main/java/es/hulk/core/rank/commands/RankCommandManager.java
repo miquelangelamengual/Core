@@ -23,7 +23,8 @@ public class RankCommandManager {
                 new RankRenameCommand(),
                 new RankAddPermCommand(),
                 new RankSetDefaultCommand(),
-                new RankInfoCommand()
+                new RankInfoCommand(),
+                new RankDeletePermissionCommand()
         );
 
         for (Object rankCommand : rankCommands) {
