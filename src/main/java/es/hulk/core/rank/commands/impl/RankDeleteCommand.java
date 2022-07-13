@@ -4,6 +4,7 @@ import es.hulk.core.Core;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
 import es.hulk.core.utils.command.BaseCommand;
+import es.hulk.core.utils.command.Command;
 import es.hulk.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
