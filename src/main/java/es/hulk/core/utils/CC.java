@@ -1,5 +1,6 @@
 package es.hulk.core.utils;
 
+import es.hulk.core.Core;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -81,6 +82,18 @@ public class CC {
         }
 
         return toReturn;
+    }
+
+    public static String translate(Player player, String text, boolean colorized) {
+        return placeholder(player, text, Core.getInstance().isPlaceholderAPI(), colorized);
+    }
+
+    public static String placeholder(Player player, String text, boolean isPlaceholderAPI, boolean colorized) {
+        if (colorized) {
+            return translate(isPlaceholderAPI ? PlaceholderAPI.setPlaceholders(player, text) : text);
+        } else {
+            return isPlaceholderAPI ? PlaceholderAPI.setPlaceholders(player, text) : text;
+        }
     }
 
     public static void broadcast(String text) {
