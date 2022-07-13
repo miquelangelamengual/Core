@@ -11,21 +11,8 @@ import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class RankManager {
-
-    @Getter
-    private Map<UUID, PermissionAttachment> permissions;
-    @Getter
-    private Map<UUID, List<String>> playerPermissions;
-
-    public RankManager() {
-        this.permissions = Maps.newConcurrentMap();
-        this.playerPermissions = Maps.newConcurrentMap();
-    }
 
     public Rank getDefaultRank() {
         Rank defaultRank;
@@ -64,7 +51,6 @@ public class RankManager {
     }
 
     public void updatePermissions(Player player) {
-        this.clearPermissions(player);
 
         Profile profile = Profile.getProfile(player);
         Rank rank = profile.getRank();
@@ -82,11 +68,5 @@ public class RankManager {
             }
         }
         return players;
-    }
-
-    public void clearPermissions(Player player) {
-        this.permissions.getOrDefault(player.getUniqueId(), player.addAttachment(Core.getInstance())).getPermissions().clear();
-        this.permissions.getOrDefault(player.getUniqueId(), player.addAttachment(Core.getInstance())).remove();
-        this.permissions.remove(player.getUniqueId());
     }
 }

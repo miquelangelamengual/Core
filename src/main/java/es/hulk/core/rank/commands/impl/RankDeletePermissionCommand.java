@@ -6,6 +6,7 @@ import es.hulk.core.rank.RankManager;
 import es.hulk.core.utils.command.BaseCommand;
 import es.hulk.core.utils.command.Command;
 import es.hulk.core.utils.command.CommandArgs;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -33,17 +34,18 @@ public class RankDeletePermissionCommand extends BaseCommand {
         String perm = args[1];
 
         if (!rank.removePermission(perm)) {
-            sender.sendMessage("Permission already exists");
+            sender.sendMessage("This permission doesnt exists in this Rank");
             return;
         }
 
-        sender.sendMessage("Permission added");
+        sender.sendMessage(rank.getName() + " perm deleted: " + perm);
 
         for (Player p : rankManager.getPlayersWithRank(rank)) {
             p.sendMessage("permission deleted " + perm);
             rankManager.updatePermissions(p);
+            p.kickPlayer("Permissions Updated, rejoin the server");
         }
 
-        sender.sendMessage("Rank perm remvoed: " + perm);
+        sender.sendMessage("Rank permisison remvoed: " + perm);
     }
 }
