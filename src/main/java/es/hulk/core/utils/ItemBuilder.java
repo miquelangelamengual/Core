@@ -23,12 +23,15 @@ import java.util.UUID;
 public class ItemBuilder implements Listener {
 
     private final ItemStack is;
+
     public ItemBuilder(Material mat) {
         this.is = new ItemStack(mat);
     }
+
     public ItemBuilder(ItemStack is) {
         this.is = is;
     }
+
     public ItemBuilder amount(int amount) {
         this.is.setAmount(amount);
         return this;
@@ -85,14 +88,20 @@ public class ItemBuilder implements Listener {
     public ItemBuilder head(String url) {
         SkullMeta headMeta = (SkullMeta) this.is.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
-        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+        byte[] encodedData = Base64.encodeBase64(
+                String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes()
+        );
+        profile
+                .getProperties()
+                .put("textures", new Property("textures", new String(encodedData)));
 
         try {
             Field profileField = headMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(headMeta, profile);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException var7) {
+        } catch (
+                IllegalArgumentException | IllegalAccessException | NoSuchFieldException var7
+        ) {
             var7.printStackTrace();
         }
 
@@ -128,7 +137,13 @@ public class ItemBuilder implements Listener {
 
     public ItemBuilder hideFlags() {
         ItemMeta meta = this.is.getItemMeta();
-        meta.addItemFlags(new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES,});
+        meta.addItemFlags(
+                new ItemFlag[]{
+                        ItemFlag.HIDE_POTION_EFFECTS,
+                        ItemFlag.HIDE_UNBREAKABLE,
+                        ItemFlag.HIDE_ATTRIBUTES,
+                }
+        );
         this.is.setItemMeta(meta);
         return this;
     }
@@ -154,7 +169,12 @@ public class ItemBuilder implements Listener {
     }
 
     public ItemBuilder color(Color color) {
-        if (this.is.getType() != Material.LEATHER_BOOTS && this.is.getType() != Material.LEATHER_CHESTPLATE && this.is.getType() != Material.LEATHER_HELMET && this.is.getType() != Material.LEATHER_LEGGINGS) {
+        if (
+                this.is.getType() != Material.LEATHER_BOOTS &&
+                        this.is.getType() != Material.LEATHER_CHESTPLATE &&
+                        this.is.getType() != Material.LEATHER_HELMET &&
+                        this.is.getType() != Material.LEATHER_LEGGINGS
+        ) {
             throw new IllegalArgumentException("color() only applicable for leather armor!");
         } else {
             LeatherArmorMeta meta = (LeatherArmorMeta) this.is.getItemMeta();

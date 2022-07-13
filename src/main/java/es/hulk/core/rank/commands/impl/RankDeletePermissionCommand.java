@@ -1,6 +1,7 @@
 package es.hulk.core.rank.commands.impl;
 
 import es.hulk.core.Core;
+import es.hulk.core.profile.Profile;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
 import es.hulk.core.utils.command.BaseCommand;
@@ -40,10 +41,8 @@ public class RankDeletePermissionCommand extends BaseCommand {
 
         sender.sendMessage(rank.getName() + " perm deleted: " + perm);
 
-        for (Player p : rankManager.getPlayersWithRank(rank)) {
-            p.sendMessage("permission deleted " + perm);
-            rankManager.updatePermissions(p);
-            p.kickPlayer("Permissions Updated, rejoin the server");
+        for (Player online : rankManager.getPlayersWithRank(rank)) {
+            rankManager.updatePermissions(online);
         }
 
         sender.sendMessage("Rank permisison remvoed: " + perm);

@@ -1,10 +1,8 @@
 package es.hulk.core.listeners;
 
-import es.hulk.core.Core;
 import es.hulk.core.profile.Profile;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.utils.CC;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
