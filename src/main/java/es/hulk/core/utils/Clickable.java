@@ -12,44 +12,43 @@ import java.util.List;
 
 public class Clickable {
 
-  private final List<TextComponent> components = new ArrayList();
+    private final List<TextComponent> components = new ArrayList();
 
-  public Clickable(String msg) {
-    TextComponent message = new TextComponent(msg);
-    this.components.add(message);
-  }
-
-  public Clickable(String msg, String hoverMsg, String clickString) {
-    this.add(msg, hoverMsg, clickString);
-  }
-
-  public TextComponent add(String msg, String hoverMsg, String clickString) {
-    TextComponent message = new TextComponent(msg);
-    if (hoverMsg != null) {
-      message.setHoverEvent(
-        new HoverEvent(Action.SHOW_TEXT, new ComponentBuilder(hoverMsg).create())
-      );
+    public Clickable(String msg) {
+        TextComponent message = new TextComponent(msg);
+        this.components.add(message);
     }
 
-    if (clickString != null) {
-      message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, clickString));
+    public Clickable(String msg, String hoverMsg, String clickString) {
+        this.add(msg, hoverMsg, clickString);
     }
 
-    this.components.add(message);
-    return message;
-  }
+    public TextComponent add(String msg, String hoverMsg, String clickString) {
+        TextComponent message = new TextComponent(msg);
+        if (hoverMsg != null) {
+            message.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new ComponentBuilder(hoverMsg).create()));
+        }
 
-  public void add(String message) {
-    this.components.add(new TextComponent(message));
-  }
+        if (clickString != null) {
+            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, clickString));
+        }
 
-  public void sendToPlayer(Player player) {
-    player.spigot().sendMessage(this.asComponents());
-  }
+        this.components.add(message);
+        return message;
+    }
 
-  public TextComponent[] asComponents() {
-    return (TextComponent[]) this.components.toArray(new TextComponent[0]);
-  }
+    public void add(String message) {
+        this.components.add(new TextComponent(message));
+    }
 
-  public Clickable() {}
+    public void sendToPlayer(Player player) {
+        player.spigot().sendMessage(this.asComponents());
+    }
+
+    public TextComponent[] asComponents() {
+        return (TextComponent[]) this.components.toArray(new TextComponent[0]);
+    }
+
+    public Clickable() {
+    }
 }

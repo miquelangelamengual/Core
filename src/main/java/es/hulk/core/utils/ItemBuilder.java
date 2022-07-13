@@ -22,169 +22,149 @@ import java.util.UUID;
 
 public class ItemBuilder implements Listener {
 
-  private final ItemStack is;
-
-  public ItemBuilder(Material mat) {
-    this.is = new ItemStack(mat);
-  }
-
-  public ItemBuilder(ItemStack is) {
-    this.is = is;
-  }
-
-  public ItemBuilder amount(int amount) {
-    this.is.setAmount(amount);
-    return this;
-  }
-
-  public ItemBuilder name(String name) {
-    ItemMeta meta = this.is.getItemMeta();
-    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-    this.is.setItemMeta(meta);
-    return this;
-  }
-
-  public ItemBuilder lore(String name) {
-    ItemMeta meta = this.is.getItemMeta();
-    List<String> lore = meta.getLore();
-    if (lore == null) {
-      lore = new ArrayList();
+    private final ItemStack is;
+    public ItemBuilder(Material mat) {
+        this.is = new ItemStack(mat);
+    }
+    public ItemBuilder(ItemStack is) {
+        this.is = is;
+    }
+    public ItemBuilder amount(int amount) {
+        this.is.setAmount(amount);
+        return this;
     }
 
-    lore.add(name);
-    meta.setLore(lore);
-    this.is.setItemMeta(meta);
-    return this;
-  }
-
-  public ItemBuilder lore(List<String> lore) {
-    List<String> toSet = new ArrayList();
-    ItemMeta meta = this.is.getItemMeta();
-
-    for (String string : lore) {
-      toSet.add(ChatColor.translateAlternateColorCodes('&', string));
+    public ItemBuilder name(String name) {
+        ItemMeta meta = this.is.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        this.is.setItemMeta(meta);
+        return this;
     }
 
-    meta.setLore(toSet);
-    this.is.setItemMeta(meta);
-    return this;
-  }
+    public ItemBuilder lore(String name) {
+        ItemMeta meta = this.is.getItemMeta();
+        List<String> lore = meta.getLore();
+        if (lore == null) {
+            lore = new ArrayList();
+        }
 
-  public ItemBuilder addLoreLine(String line) {
-    ItemMeta im = is.getItemMeta();
-    List<String> lore = new ArrayList<>();
-    if (im.hasLore()) lore = new ArrayList<>(im.getLore());
-    lore.add(CC.translate(line));
-    im.setLore(lore);
-    is.setItemMeta(im);
-    return this;
-  }
-
-  public ItemBuilder durability(int durability) {
-    this.is.setDurability((short) durability);
-    return this;
-  }
-
-  public ItemBuilder head(String url) {
-    SkullMeta headMeta = (SkullMeta) this.is.getItemMeta();
-    GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-    byte[] encodedData = Base64.encodeBase64(
-      String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes()
-    );
-    profile
-      .getProperties()
-      .put("textures", new Property("textures", new String(encodedData)));
-
-    try {
-      Field profileField = headMeta.getClass().getDeclaredField("profile");
-      profileField.setAccessible(true);
-      profileField.set(headMeta, profile);
-    } catch (
-      IllegalArgumentException | IllegalAccessException | NoSuchFieldException var7
-    ) {
-      var7.printStackTrace();
+        lore.add(name);
+        meta.setLore(lore);
+        this.is.setItemMeta(meta);
+        return this;
     }
 
-    this.is.setItemMeta(headMeta);
-    return this;
-  }
+    public ItemBuilder lore(List<String> lore) {
+        List<String> toSet = new ArrayList();
+        ItemMeta meta = this.is.getItemMeta();
 
-  public ItemBuilder owner(String owner) {
-    if (this.is.getType() == Material.SKULL_ITEM) {
-      SkullMeta meta = (SkullMeta) this.is.getItemMeta();
-      meta.setOwner(owner);
-      this.is.setItemMeta(meta);
-      return this;
-    } else {
-      throw new IllegalArgumentException("setOwner() only applicable for Skull Item");
-    }
-  }
+        for (String string : lore) {
+            toSet.add(ChatColor.translateAlternateColorCodes('&', string));
+        }
 
-  public ItemBuilder data(int data) {
-    this.is.setData(new MaterialData(this.is.getType(), (byte) data));
-    return this;
-  }
-
-  public ItemBuilder enchantment(Enchantment enchantment, int level) {
-    this.is.addUnsafeEnchantment(enchantment, level);
-    return this;
-  }
-
-  public ItemBuilder enchantment(Enchantment enchantment) {
-    this.is.addUnsafeEnchantment(enchantment, 1);
-    return this;
-  }
-
-  public ItemBuilder hideFlags() {
-    ItemMeta meta = this.is.getItemMeta();
-    meta.addItemFlags(
-      new ItemFlag[] {
-        ItemFlag.HIDE_POTION_EFFECTS,
-        ItemFlag.HIDE_UNBREAKABLE,
-        ItemFlag.HIDE_ATTRIBUTES,
-      }
-    );
-    this.is.setItemMeta(meta);
-    return this;
-  }
-
-  public ItemBuilder type(Material material) {
-    this.is.setType(material);
-    return this;
-  }
-
-  public ItemBuilder clearLore() {
-    ItemMeta meta = this.is.getItemMeta();
-    meta.setLore(new ArrayList());
-    this.is.setItemMeta(meta);
-    return this;
-  }
-
-  public ItemBuilder clearEnchantments() {
-    for (Enchantment e : this.is.getEnchantments().keySet()) {
-      this.is.removeEnchantment(e);
+        meta.setLore(toSet);
+        this.is.setItemMeta(meta);
+        return this;
     }
 
-    return this;
-  }
-
-  public ItemBuilder color(Color color) {
-    if (
-      this.is.getType() != Material.LEATHER_BOOTS &&
-      this.is.getType() != Material.LEATHER_CHESTPLATE &&
-      this.is.getType() != Material.LEATHER_HELMET &&
-      this.is.getType() != Material.LEATHER_LEGGINGS
-    ) {
-      throw new IllegalArgumentException("color() only applicable for leather armor!");
-    } else {
-      LeatherArmorMeta meta = (LeatherArmorMeta) this.is.getItemMeta();
-      meta.setColor(color);
-      this.is.setItemMeta(meta);
-      return this;
+    public ItemBuilder addLoreLine(String line) {
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        if (im.hasLore()) lore = new ArrayList<>(im.getLore());
+        lore.add(CC.translate(line));
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return this;
     }
-  }
 
-  public ItemStack build() {
-    return this.is;
-  }
+    public ItemBuilder durability(int durability) {
+        this.is.setDurability((short) durability);
+        return this;
+    }
+
+    public ItemBuilder head(String url) {
+        SkullMeta headMeta = (SkullMeta) this.is.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        byte[] encodedData = Base64.encodeBase64(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
+        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
+
+        try {
+            Field profileField = headMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(headMeta, profile);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException var7) {
+            var7.printStackTrace();
+        }
+
+        this.is.setItemMeta(headMeta);
+        return this;
+    }
+
+    public ItemBuilder owner(String owner) {
+        if (this.is.getType() == Material.SKULL_ITEM) {
+            SkullMeta meta = (SkullMeta) this.is.getItemMeta();
+            meta.setOwner(owner);
+            this.is.setItemMeta(meta);
+            return this;
+        } else {
+            throw new IllegalArgumentException("setOwner() only applicable for Skull Item");
+        }
+    }
+
+    public ItemBuilder data(int data) {
+        this.is.setData(new MaterialData(this.is.getType(), (byte) data));
+        return this;
+    }
+
+    public ItemBuilder enchantment(Enchantment enchantment, int level) {
+        this.is.addUnsafeEnchantment(enchantment, level);
+        return this;
+    }
+
+    public ItemBuilder enchantment(Enchantment enchantment) {
+        this.is.addUnsafeEnchantment(enchantment, 1);
+        return this;
+    }
+
+    public ItemBuilder hideFlags() {
+        ItemMeta meta = this.is.getItemMeta();
+        meta.addItemFlags(new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES,});
+        this.is.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder type(Material material) {
+        this.is.setType(material);
+        return this;
+    }
+
+    public ItemBuilder clearLore() {
+        ItemMeta meta = this.is.getItemMeta();
+        meta.setLore(new ArrayList());
+        this.is.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder clearEnchantments() {
+        for (Enchantment e : this.is.getEnchantments().keySet()) {
+            this.is.removeEnchantment(e);
+        }
+
+        return this;
+    }
+
+    public ItemBuilder color(Color color) {
+        if (this.is.getType() != Material.LEATHER_BOOTS && this.is.getType() != Material.LEATHER_CHESTPLATE && this.is.getType() != Material.LEATHER_HELMET && this.is.getType() != Material.LEATHER_LEGGINGS) {
+            throw new IllegalArgumentException("color() only applicable for leather armor!");
+        } else {
+            LeatherArmorMeta meta = (LeatherArmorMeta) this.is.getItemMeta();
+            meta.setColor(color);
+            this.is.setItemMeta(meta);
+            return this;
+        }
+    }
+
+    public ItemStack build() {
+        return this.is;
+    }
 }
