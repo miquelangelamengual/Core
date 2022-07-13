@@ -40,6 +40,7 @@ public class RankAddPermCommand extends BaseCommand {
         sender.sendMessage("Permission added");
 
         for (Player p : rankManager.getPlayersWithRank(rank)) {
+            p.sendMessage("You have been granted the permission " + perm);
             rankManager.updatePermissions(p);
         }
 

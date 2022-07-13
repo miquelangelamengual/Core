@@ -41,6 +41,7 @@ es\hulk\core\utils\menu\pagination\PageButton.class
 es\hulk\core\utils\config\FileConfig.class
 es\hulk\core\utils\menu\Menu.class
 es\hulk\core\utils\menu\MenuUpdateTask.class
+es\hulk\core\rank\commands\impl\RankDeletePermissionCommand.class
 es\hulk\core\mongo\MongoManager.class
 es\hulk\core\rank\commands\impl\RankAddPermCommand.class
 es\hulk\core\utils\aquamenu\listener\AquaMenuListener.class

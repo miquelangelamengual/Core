@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -32,6 +33,21 @@ public class ProfileListener implements Listener {
         rankManager.updatePermissions(player);
 
         profile.init();
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        Profile profile = Profile.getProfile(player);
+        Rank rank = profile.getRank();
+        RankManager rankManager = Core.getInstance().getRankManager();
+
+        player.sendMessage(rank.getPermissions().toString());
+
+        for (Player p : rankManager.getPlayersWithRank(rank)) {
+            System.out.println("Player " + p.getName() + " has rank " + rank.getName());
+            rankManager.updatePermissions(p);
+        }
     }
 
     @EventHandler

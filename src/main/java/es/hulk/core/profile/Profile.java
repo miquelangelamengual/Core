@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
 import es.hulk.core.Core;
 import es.hulk.core.rank.Rank;
+import es.hulk.core.rank.RankManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
@@ -67,6 +68,11 @@ public class Profile {
                 document,
                 new UpdateOptions().upsert(true)
         );
+
+        RankManager rankManager = Core.getInstance().getRankManager();
+        for (Player p : rankManager.getPlayersWithRank(rank)) {
+            rankManager.updatePermissions(p);
+        }
     }
 
     public void destroy() {

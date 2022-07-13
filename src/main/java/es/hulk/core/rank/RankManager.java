@@ -74,7 +74,6 @@ public class RankManager {
         this.addPermissions(player, rankPerms);
     }
 
-    //Method to get all the players with the same rank
     public List<Player> getPlayersWithRank(Rank rank) {
         List<Player> players = Lists.newArrayList();
         for (Player player : Bukkit.getOnlinePlayers()) {

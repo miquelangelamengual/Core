@@ -8,39 +8,47 @@ import es.hulk.core.utils.command.BaseCommand;
 import es.hulk.core.utils.command.Command;
 import es.hulk.core.utils.command.CommandArgs;
 import me.clip.placeholderapi.libs.kyori.adventure.platform.facet.Facet;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class RankSetCommand extends BaseCommand {
 
-    @Command(name = "rank.set", permission = "rank.set")
+    @Command(name = "rank.setrank", permission = "rank.setrank", inGameOnly = false)
     @Override
     public void onCommand(CommandArgs command) {
-        Player player = command.getPlayer();
+        CommandSender sender = command.getSender();
         String[] args = command.getArgs();
-        Profile profile = Profile.getProfile(player);
 
         if (args.length == 0) {
-            player.sendMessage("/rank set <rank name>");
+            sender.sendMessage("/rank setrank <rank name> <player>");
             return;
         }
         
         RankManager rankManager = Core.getInstance().getRankManager();
         Rank rank = rankManager.getRank(args[0]);
+        Player targetPlayer = Bukkit.getPlayer(args[1]);
+
+        if (targetPlayer == null) {
+            sender.sendMessage("Player not found");
+            return;
+        }
+
+        Profile profile = Profile.getProfile(targetPlayer);
 
         if (profile == null) {
-            player.sendMessage("Profile not found");
+            sender.sendMessage("Profile not found");
             return;
         }
 
         if (rank == null) {
-            player.sendMessage("Rank not found");
+            sender.sendMessage("Rank not found");
             return;
         }
 
         profile.setRank(rank);
-        rank.setColor(rank.getColor());
         profile.save();
-        player.sendMessage("Rank set to " + rank.getName());
+        sender.sendMessage("Rank set to " + rank.getName());
     }
 }

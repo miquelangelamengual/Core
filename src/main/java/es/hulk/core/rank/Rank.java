@@ -147,20 +147,13 @@ public class Rank {
         return false;
     }
 
-    public List<String> getAllPermissions() {
-        List<String> permissions = Lists.newArrayList(this.permissions);
-
-        for(String inheritance : this.inheritances) {
-            Rank r = Core.getInstance().getRankManager().getRank(inheritance);
-
-            if(r != null) {
-                for(String perm : r.getAllPermissions()) {
-                    if(!permissions.contains(perm)) permissions.add(perm);
-                }
-            }
+    public boolean removePermission(String permission) {
+        if(this.permissions.contains(permission)) {
+            this.permissions.remove(permission);
+            return true;
         }
 
-        return permissions;
+        return false;
     }
 
     public void destroy() {
