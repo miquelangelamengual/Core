@@ -6,7 +6,8 @@ import es.hulk.core.profile.Profile;
 import es.hulk.core.profile.ProfileListener;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
-import es.hulk.core.rank.commands.*;
+import es.hulk.core.rank.commands.RankCommandManager;
+import es.hulk.core.rank.commands.impl.*;
 import es.hulk.core.utils.aquamenu.MenuManager;
 import es.hulk.core.utils.aquamenu.listener.AquaMenuListener;
 import es.hulk.core.utils.command.CommandManager;
@@ -15,10 +16,11 @@ import es.hulk.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Getter @Setter
 public final class Core extends JavaPlugin {
@@ -31,6 +33,7 @@ public final class Core extends JavaPlugin {
     private MongoManager mongoManager;
     private CommandManager commandManager;
     private RankManager rankManager;
+    private RankCommandManager rankCommandManager;
 
     @Override
     public void onEnable() {
@@ -67,21 +70,19 @@ public final class Core extends JavaPlugin {
     }
 
     public void loadCommands() {
-        new RankCommand();
-        new RankCreateCommand();
-        new RankListCommand();
-        new RankSetCommand();
-        new RankSetColorCommand();
-        new RankSetPrefixCommand();
+        this.rankCommandManager = new RankCommandManager();
     }
 
     public void loadListeners() {
-        new ProfileListener();
-        new ChatListener();
-
-        Arrays.asList(
+        List<Listener> listeners = Arrays.asList(
+                new ChatListener(),
+                new ProfileListener(),
                 new AquaMenuListener(),
                 new MenuListener()
-        ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
+        );
+
+        for (Listener listener : listeners) {
+            Bukkit.getPluginManager().registerEvents(listener, this);
+        }
     }
 }
