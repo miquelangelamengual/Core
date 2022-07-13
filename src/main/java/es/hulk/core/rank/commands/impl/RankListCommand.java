@@ -1,4 +1,4 @@
-package es.hulk.core.rank.commands;
+package es.hulk.core.rank.commands.impl;
 
 import es.hulk.core.rank.Rank;
 import es.hulk.core.utils.command.BaseCommand;

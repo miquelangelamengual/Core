@@ -1,5 +1,6 @@
-package es.hulk.core.rank.commands;
+package es.hulk.core.rank.commands.impl;
 
+import com.google.common.collect.Lists;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.utils.command.BaseCommand;
 import es.hulk.core.utils.command.Command;
@@ -16,7 +17,14 @@ public class RankCreateCommand extends BaseCommand {
         String[] args = command.getArgs();
 
         Rank rank = new Rank(args[0]);
-        player.sendMessage("Rank " + rank.getName() + " created");
+        rank.setDefaultRank(false);
+        rank.setColor("WHITE");
+        rank.setPrefix("");
+        rank.setSuffix("");
+        rank.setPermissions(Lists.newArrayList());
+        rank.setInheritances(Lists.newArrayList());
+        rank.setPriority(0);
         rank.save();
+        player.sendMessage("Rank " + rank.getName() + " created");
     }
 }

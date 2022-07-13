@@ -20,6 +20,11 @@ public class RankCommand extends BaseCommand {
         player.sendMessage("/rank set <rank name> - Create a rank");
         player.sendMessage("/rank setprefix <rank name> <prefix> - Set a rank prefix");
         player.sendMessage("/rank setcolor <rank name> <color> - Set a rank color");
+        player.sendMessage("/rank setpriority <rank name> <priority> - Set a rank priority");
+        player.sendMessage("/rank setdefault <rank name> - Set a rank as default");
+        player.sendMessage("/rank setsuffix <rank name> <suffix> - Set a rank suffix");
+        player.sendMessage("/rank delete <rank name> - Delete a rank");
+        player.sendMessage("/rank addperm <rank name> <permission> - Add a permission to a rank");
         player.sendMessage(CC.CHAT_BAR);
     }
 }

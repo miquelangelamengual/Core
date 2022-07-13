@@ -26,6 +26,7 @@ public class Profile {
     public static Profile getProfile(Player player) {
         return profiles.computeIfAbsent(player, key ->{
             Profile profile = new Profile(key);
+            profile.setRank(Core.getInstance().getRankManager().getDefaultRank());
 
             profiles.put(key, profile);
             return profile;

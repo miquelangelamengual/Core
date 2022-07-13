@@ -8,11 +8,9 @@ import es.hulk.core.Core;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
-import org.bukkit.ChatColor;
 import org.json.JSONObject;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -24,7 +22,8 @@ import static com.mongodb.client.model.Filters.eq;
 @Setter
 public class Rank {
 
-    @Getter private static final Map<Rank, String> ranks = Maps.newHashMap();
+    @Getter
+    private static final Map<Rank, String> ranks = Maps.newHashMap();
 
     private String name, prefix, suffix;
     private int priority;
@@ -137,6 +136,31 @@ public class Rank {
                 document,
                 new UpdateOptions().upsert(true)
         );
+    }
+
+    public boolean addPermission(String permission) {
+        if(!this.permissions.contains(permission)) {
+            this.permissions.add(permission);
+            return true;
+        }
+
+        return false;
+    }
+
+    public List<String> getAllPermissions() {
+        List<String> permissions = Lists.newArrayList(this.permissions);
+
+        for(String inheritance : this.inheritances) {
+            Rank r = Core.getInstance().getRankManager().getRank(inheritance);
+
+            if(r != null) {
+                for(String perm : r.getAllPermissions()) {
+                    if(!permissions.contains(perm)) permissions.add(perm);
+                }
+            }
+        }
+
+        return permissions;
     }
 
     public void destroy() {
