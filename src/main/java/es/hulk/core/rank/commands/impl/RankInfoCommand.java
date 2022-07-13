@@ -29,6 +29,9 @@ public class RankInfoCommand extends BaseCommand {
             return;
         }
 
+        sender.sendMessage("");
+        sender.sendMessage("Rank Information:");
+        sender.sendMessage("");
         sender.sendMessage("Rank: " + rank.getName());
         sender.sendMessage("Default rank: " + rank.isDefaultRank());
         sender.sendMessage("Permissions: " + rank.getPermissions().toString());
@@ -37,5 +40,6 @@ public class RankInfoCommand extends BaseCommand {
         sender.sendMessage("Suffix: " + rank.getSuffix());
         sender.sendMessage("Priority: " + rank.getPriority());
         sender.sendMessage("Rank color: " + rank.getColor());
+        sender.sendMessage("");
     }
 }
