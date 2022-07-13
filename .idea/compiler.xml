@@ -17,5 +17,8 @@
         <module name="Core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Core" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,7 +1,8 @@
-package es.hulk.core.profile;
+package es.hulk.core.profile.listeners;
 
 import com.mongodb.client.model.Filters;
 import es.hulk.core.Core;
+import es.hulk.core.profile.Profile;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
 import org.bukkit.Bukkit;

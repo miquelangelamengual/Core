@@ -4,16 +4,17 @@ import com.google.common.collect.Maps;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
 import es.hulk.core.Core;
+import es.hulk.core.profile.social.objects.SocialObject;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -36,7 +37,9 @@ public class Profile {
 
     private UUID uuid;
     private String name;
+
     private Rank rank;
+    private SocialObject social;
 
     public Profile(Player player) {
         this.uuid = player.getUniqueId();
@@ -51,17 +54,19 @@ public class Profile {
 
         this.name = document.getString("name");
         this.rank = Rank.fromJSON(document.getString("rank"));
+        this.social = SocialObject.fromJSON(document.getString("social"));
     }
 
     @SuppressWarnings("all")
     public void save() {
         Document document = new Document();
 
-        document.put("name", this.name);
-        document.put("uuid", this.uuid.toString());
         Rank.getRanks().keySet().forEach(Rank::save);
 
+        document.put("name", this.name);
+        document.put("uuid", this.uuid.toString());
         document.put("rank", this.rank.toJSON());
+        document.put("social", this.social.toJSON());
 
         Core.getInstance().getMongoManager().getProfiles().replaceOne(
                 eq("uuid", this.uuid.toString()),
@@ -77,7 +82,7 @@ public class Profile {
 
     public void destroy() {
         this.save();
-        profiles.remove(this);
+        profiles.remove(Bukkit.getPlayer(this.getUuid()));
     }
 
 }
