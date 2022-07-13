@@ -1,5 +1,6 @@
 package es.hulk.core.utils;
 
+import com.google.common.collect.Lists;
 import es.hulk.core.Core;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -73,7 +74,7 @@ public class CC {
     }
 
     public static List<String> translate(String[] lines, Player player) {
-        List<String> toReturn = new ArrayList();
+        List<String> toReturn = Lists.newArrayList();
 
         for (String line : lines) {
             if (line != null) {
