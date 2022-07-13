@@ -4,7 +4,6 @@ import com.mongodb.client.model.Filters;
 import es.hulk.core.Core;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,7 +28,6 @@ public class ProfileListener implements Listener {
             Rank defaultRank = rankManager.getDefaultRank();
             if(defaultRank != null) profile.setRank(defaultRank);
         }
-
         rankManager.updatePermissions(player);
 
         profile.init();

@@ -32,7 +32,7 @@ public abstract class Slot {
       public ItemStack getItem(Player player) {
         return new ItemBuilder(getMaterialOr("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS"))
           .name(" ")
-          .durability(doesMaterialExists("STAINED_GLASS_PANE") ? 4 : 0)
+          .data(doesMaterialExists("STAINED_GLASS_PANE") ? 4 : 0)
           .build();
       }
 

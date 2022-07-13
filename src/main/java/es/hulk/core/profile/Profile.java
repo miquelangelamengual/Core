@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Filters.eq;
 
