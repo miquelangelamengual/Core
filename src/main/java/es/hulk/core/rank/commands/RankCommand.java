@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class RankCommand extends BaseCommand {
 
-    @Command(name = "rank")
+    @Command(name = "rank", permission = "rank.help")
     @Override
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
