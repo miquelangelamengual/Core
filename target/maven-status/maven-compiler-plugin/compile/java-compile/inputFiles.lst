@@ -1,6 +1,7 @@
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankDeletePermissionCommand.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\menu\pagination\JumpToPageButton.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\task\TaskUtil.java
+F:\SecretProject\Core\src\main\java\es\hulk\core\profile\social\Social.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankCreateCommand.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\ItemBuilder.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\WoolUtil.java
@@ -19,7 +20,6 @@ F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankInfoComm
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankSetSuffixCommand.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\aquamenu\listener\AquaMenuListener.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankSetPrefixCommand.java
-F:\SecretProject\Core\src\main\java\es\hulk\core\profile\ProfileListener.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\aquamenu\MenuManager.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\Rank.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\aquamenu\slots\pages\PreviousPageSlot.java
@@ -42,7 +42,9 @@ F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankSetPrior
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\menu\Button.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\Clickable.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\profile\Profile.java
+F:\SecretProject\Core\src\main\java\es\hulk\core\profile\social\objects\SocialObject.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\Core.java
+F:\SecretProject\Core\src\main\java\es\hulk\core\profile\listeners\ProfileListener.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\RankCommand.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\utils\CC.java
 F:\SecretProject\Core\src\main\java\es\hulk\core\rank\commands\impl\RankListCommand.java
