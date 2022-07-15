@@ -1,7 +1,7 @@
 package es.hulk.core;
 
 import es.hulk.core.listeners.ChatListener;
-import es.hulk.core.mongo.MongoManager;
+import es.hulk.core.database.MongoManager;
 import es.hulk.core.profile.Profile;
 import es.hulk.core.profile.listeners.ProfileListener;
 import es.hulk.core.rank.Rank;

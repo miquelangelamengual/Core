@@ -7,13 +7,11 @@ import es.hulk.core.rank.RankManager;
 import es.hulk.core.utils.command.BaseCommand;
 import es.hulk.core.utils.command.Command;
 import es.hulk.core.utils.command.CommandArgs;
-import me.clip.placeholderapi.libs.kyori.adventure.platform.facet.Facet;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class RankSetCommand extends BaseCommand {
+public class RankSetRankCommand extends BaseCommand {
 
     @Command(name = "rank.setrank", permission = "rank.setrank", inGameOnly = false)
     @Override

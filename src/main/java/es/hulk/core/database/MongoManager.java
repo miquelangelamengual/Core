@@ -1,4 +1,4 @@
-package es.hulk.core.mongo;
+package es.hulk.core.database;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;

@@ -15,7 +15,7 @@ public class RankCommandManager {
                 new RankDeleteCommand(),
                 new RankCreateCommand(),
                 new RankListCommand(),
-                new RankSetCommand(),
+                new RankSetRankCommand(),
                 new RankSetColorCommand(),
                 new RankSetPrefixCommand(),
                 new RankSetSuffixCommand(),

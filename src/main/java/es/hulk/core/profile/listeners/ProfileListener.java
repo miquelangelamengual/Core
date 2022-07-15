@@ -25,9 +25,9 @@ public class ProfileListener implements Listener {
         RankManager rankManager = Core.getInstance().getRankManager();
         Rank rank = rankManager.getRank(profile.getRank().getName());
 
-        if(rank == null) {
+        if (rank == null) {
             Rank defaultRank = rankManager.getDefaultRank();
-            if(defaultRank != null) profile.setRank(defaultRank);
+            if (defaultRank != null) profile.setRank(defaultRank);
         }
         rankManager.updatePermissions(player);
 
@@ -53,6 +53,8 @@ public class ProfileListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Profile profile = Profile.getProfile(event.getPlayer());
         if (profile == null) return;
+        Rank rank = profile.getRank();
         profile.destroy();
+        rank.destroy();
     }
 }
