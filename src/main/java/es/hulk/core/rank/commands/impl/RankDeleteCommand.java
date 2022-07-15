@@ -1,5 +1,6 @@
 package es.hulk.core.rank.commands.impl;
 
+import com.mongodb.BasicDBObject;
 import es.hulk.core.Core;
 import es.hulk.core.rank.Rank;
 import es.hulk.core.rank.RankManager;
@@ -30,6 +31,7 @@ public class RankDeleteCommand extends BaseCommand {
         }
 
         Rank.getRanks().remove(rank);
+        rank.delete(rank.getName());
         player.sendMessage("Rank deleted");
     }
 }

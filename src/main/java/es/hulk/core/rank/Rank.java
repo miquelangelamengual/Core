@@ -2,12 +2,14 @@ package es.hulk.core.rank;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
 import es.hulk.core.Core;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
 import java.beans.ConstructorProperties;
@@ -103,7 +105,6 @@ public class Rank {
     public static void init() {
         MongoCollection<Document> collection = Core.getInstance().getMongoManager().getRanks();
 
-
         collection.find().forEach((Consumer<? super Document>) doc -> {
             String name = doc.getString("name");
             String prefix = doc.getString("prefix");
@@ -120,7 +121,7 @@ public class Rank {
 
     @SuppressWarnings("all")
     public void save() {
-        Document document = new Document();
+        Document document = new Document("name", this.name);
 
         document.put("name", this.name);
         document.put("prefix", this.prefix);
@@ -131,11 +132,14 @@ public class Rank {
         document.put("permissions", this.permissions);
         document.put("inheritances", this.inheritances);
 
-        Core.getInstance().getMongoManager().getRanks().replaceOne(
-                eq("name", this.name),
-                document,
-                new UpdateOptions().upsert(true)
-        );
+        Bson filter = eq("name", this.name);
+        FindIterable iterable = Core.getInstance().getMongoManager().getProfiles().find(filter);
+
+        if (iterable.first() == null) {
+            Core.getInstance().getMongoManager().getProfiles().insertOne(document);
+        } else {
+            Core.getInstance().getMongoManager().getProfiles().replaceOne(filter, document);
+        }
     }
 
     public boolean addPermission(String permission) {
@@ -154,6 +158,15 @@ public class Rank {
         }
 
         return false;
+    }
+
+    public void delete(String rankName) {
+        FindIterable<Document> foundResults = Core.getInstance().getMongoManager().getRanks().find();
+        for (final Document doc : foundResults) {
+            if (doc.getString("name").equals(rankName)) {
+                Core.getInstance().getMongoManager().getRanks().deleteOne(doc);
+            }
+        }
     }
 
     public void destroy() {
